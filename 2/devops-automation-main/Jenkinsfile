@@ -1,17 +1,23 @@
 pipeline {
     agent any
+
+    tools {
+        jdk 'jdk11'
+        maven 'maven3'
+    }
+
     stages {
         stage('Git Checkout') {
             steps {
-                git branch: 'main',changelog:false, poll: false, url: 
+                git branch: 'main',changelog:false, poll: false, url: https://github.com/KingMicky/all-together/tree/main/2/devops-automation-mainhttps://github.com/KingMicky/all-together/tree/main/2/devops-automation-main.git
             }
         }
-        stage('Build') {
+        stage('Compile') {
             steps {
                 sh 'mvn clean package'
             }
         }
-        stage('Test') {
+        stage('Sonarqube Analysis') {
             steps {
                 sh 'mvn test'
             }
